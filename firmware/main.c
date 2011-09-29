@@ -37,7 +37,7 @@ int main(void)
 	SID_CS_PORT |= (1<<SID_CS_PIN);
 	
 	DDRC = 0xFF;
-	DDRD = 0xFF;
+	DDRA = 0xFF;
 
     USART0_Init();
     sei();
