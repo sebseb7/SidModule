@@ -6,7 +6,10 @@ MCU_AVRDUDE = atmega644p
 
 #MCU = atmega644
 F_CPU = 20000000
-FUSE_SETTINGS = 
+
+# external ceramic q, no Div/8 , no JTAG !!
+FUSE_SETTINGS = -U lfuse:w:0xd6:m -U hfuse:w:0xd9:m 
+
 
 
 
@@ -116,15 +119,15 @@ LDFLAGS += -lm
 # Type: avrdude -c ?
 # to get a full listing.
 #
-#AVRDUDE_PROGRAMMER = STK500v2
-AVRDUDE_PROGRAMMER = avr109 -b 230400
+AVRDUDE_PROGRAMMER = STK500v2
+#AVRDUDE_PROGRAMMER = avr109 -b 230400
 #AVRDUDE_PROGRAMMER = avr109 -b 115200
 #falls Ponyser ausgewählt wird, muss sich unsere avrdude-Configdatei im Bin-Verzeichnis des Compilers befinden
 
 #AVRDUDE_PORT = com1    # programmer connected to serial device
 #AVRDUDE_PORT = lpt1    # programmer connected to parallel port
-#AVRDUDE_PORT = /dev/cu.SLAB_USBtoUART     # programmer connected to USB
-AVRDUDE_PORT = /dev/cu.usbserial-A100DEF4     # programmer connected to USB
+AVRDUDE_PORT = /dev/cu.SLAB_USBtoUART     # programmer connected to USB
+#AVRDUDE_PORT = /dev/cu.usbserial-A100DEF4     # programmer connected to USB
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex 
 AVRDUDE_WRITE_FUSE = $(FUSE_SETTINGS)

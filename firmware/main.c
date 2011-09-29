@@ -16,19 +16,17 @@ void nops(void);
 void toggle_cs(void);
 void write_reg(uint8_t,uint8_t);
 
-
-#define SID_RESET_DDR DDRA
-#define SID_RESET_PORT PORTA
-#define SID_RESET_PIN PORTA4
-#define SID_RW_DDR DDRA
-#define SID_RW_PORT PORTA
-#define SID_RW_PIN PORTA5
-#define SID_CS_DDR DDRA
-#define SID_CS_PORT PORTA
-#define SID_CS_PIN PORTA6
+#define SID_RESET_DDR DDRD
+#define SID_RESET_PORT PORTD
+#define SID_RESET_PIN PORTD6
+#define SID_RW_DDR DDRD
+#define SID_RW_PORT PORTD
+#define SID_RW_PIN PORTD4
+#define SID_CS_DDR DDRD
+#define SID_CS_PORT PORTD
+#define SID_CS_PIN PORTD5
 
 uint8_t sid_buf[25];
-
 
 int main(void)
 {
@@ -39,9 +37,7 @@ int main(void)
 	SID_CS_PORT |= (1<<SID_CS_PIN);
 	
 	DDRC = 0xFF;
-//	PORTC = 0xFF;
-	
-	DDRD = 0x7C;
+	DDRA = 0xFF;
 
     USART0_Init();
     sei();
@@ -96,13 +92,12 @@ void write_reg(uint8_t sid_addr, uint8_t sid_data)
 {
 
 			PORTC = sid_data;
-			PORTD &= ~(0x7C);
-			PORTD |= (sid_addr<<2);
+			PORTA = sid_addr;
 			
 			toggle_cs();
 			
 			PORTC = 0xff;
-			PORTD |= (63<<2);
+			PORTA = 0xff;
 
 }
 
