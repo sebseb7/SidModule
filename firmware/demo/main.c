@@ -42,7 +42,7 @@ int main(int argc,char** argv)
 
         while (1)
         {
-        	// set waveform to sawtooth and toogle between ATTACK/DECAY/SUSTAIN and RELEASE using the GATE bit
+        	// set waveform to sawtooth and toogle between [ATTACK/DECAY/SUSTAIN] and RELEASE using the GATE bit
 			write_reg(4,0x20);
 			sid_flush();
 			sleep(1);
