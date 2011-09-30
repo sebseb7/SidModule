@@ -53,7 +53,7 @@
 #define BLPORT		PORTD
 #define BLDDR		DDRD
 #define BLPIN		PIND
-#define BLPNUM		PIND5
+#define BLPNUM		PIND2
 
 /*
  * Watchdog-reset is issued at exit 

@@ -30,7 +30,7 @@ void USART0_Init (void)
 {
 	// set clock divider
 	#undef BAUD
-	#define BAUD 230400
+	#define BAUD 115200
 	#include <util/setbaud.h>
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;

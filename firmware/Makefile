@@ -120,14 +120,14 @@ LDFLAGS += -lm
 # to get a full listing.
 #
 AVRDUDE_PROGRAMMER = STK500v2
+AVRDUDE_UPROGRAMMER = avr109 -b 115200
 #AVRDUDE_PROGRAMMER = avr109 -b 230400
-#AVRDUDE_PROGRAMMER = avr109 -b 115200
 #falls Ponyser ausgewählt wird, muss sich unsere avrdude-Configdatei im Bin-Verzeichnis des Compilers befinden
 
 #AVRDUDE_PORT = com1    # programmer connected to serial device
 #AVRDUDE_PORT = lpt1    # programmer connected to parallel port
 AVRDUDE_PORT = /dev/cu.SLAB_USBtoUART     # programmer connected to USB
-#AVRDUDE_PORT = /dev/cu.usbserial-A100DEF4     # programmer connected to USB
+AVRDUDE_UPORT = /dev/cu.usbserial-A100DEF8     # programmer connected to USB
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex 
 AVRDUDE_WRITE_FUSE = $(FUSE_SETTINGS)
@@ -136,6 +136,7 @@ AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
 #avrdude -c avrispv2 -P usb -p m32 -U flash:w:blink.hex
 #AVRDUDE_FLAGS = -p m168 -F -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
 AVRDUDE_FLAGS = -p $(MCU_AVRDUDE) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER)
+AVRDUDE_UFLAGS = -p $(MCU_AVRDUDE) -P $(AVRDUDE_UPORT) -c $(AVRDUDE_UPROGRAMMER)
 #AVRDUDE_FLAGS = -p $(MCU) -c $(AVRDUDE_PROGRAMMER)
 
 # Uncomment the following if you want avrdude's erase cycle counter.
@@ -272,6 +273,9 @@ extcoff: $(TARGET).elf
 # Program the device.  
 flash: $(TARGET).hex
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
+	
+uflash: $(TARGET).hex
+	$(AVRDUDE) $(AVRDUDE_UFLAGS) $(AVRDUDE_WRITE_FLASH)
 	
 eeprom: $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_EEPROM)
