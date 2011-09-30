@@ -5,3 +5,5 @@ It utilizes a MOS 6581 (original C64 sound-chip) for that.
 
 
 ![pcb](/sebseb7/SidModule/raw/master/sidModule.png)
+
+![sch](/sebseb7/SidModule/raw/master/sidModule_sch.png)
