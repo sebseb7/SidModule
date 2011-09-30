@@ -26,7 +26,10 @@ void write_reg(uint8_t,uint8_t);
 #define SID_CS_PORT PORTD
 #define SID_CS_PIN PORTD5
 
+#define soundcheck
+
 uint8_t sid_buf[25];
+
 
 int main(void)
 {
@@ -43,9 +46,29 @@ int main(void)
     sei();
     
     uint8_t data = 0;
+
+#ifdef soundcheck
+	for(uint8_t addr = 0; addr < 25;addr++)
+	{
+		write_reg(addr,0);
+	}
+	write_reg(1,0x50);
+	write_reg(4,0x21);
+	write_reg(5,0x37);
+	write_reg(6,0x73);
+	write_reg(24,0x08);
+#endif
+
     
     while(1)
     {
+
+#ifdef soundcheck
+		write_reg(4,0x21);
+		_delay_ms(50);
+		write_reg(4,0x20);
+		_delay_ms(50);
+#endif
 
 
 		if(USART0_Getc_nb(&data))
@@ -117,3 +140,6 @@ void nops(void)
 	}
 
 }
+
+
+
