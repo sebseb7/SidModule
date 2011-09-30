@@ -26,7 +26,7 @@ void write_reg(uint8_t,uint8_t);
 #define SID_CS_PORT PORTD
 #define SID_CS_PIN PORTD5
 
-#define soundcheck
+//#define soundcheck
 
 uint8_t sid_buf[25];
 
