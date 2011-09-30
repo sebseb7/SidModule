@@ -34,14 +34,15 @@ int main(int argc,char** argv)
         {
 			write_reg(addr,0);
 		}
-		write_reg(1,0x50);
-		write_reg(5,0x37);
-		write_reg(6,0x73);
-		write_reg(24,0x08);
+		write_reg(1,0x50); // about 1200Hz
+		write_reg(5,0x37); // attack 23ms, decay 240ms
+		write_reg(6,0x83); // sustain level 50%, relase 72ms
+		write_reg(24,0x08); // volume to 50%
 		sid_flush();
 
         while (1)
         {
+        	// set waveform to sawtooth and toogle between ATTACK/DECAY/SUSTAIN and RELEASE using the GATE bit
 			write_reg(4,0x20);
 			sid_flush();
 			sleep(1);
