@@ -29,6 +29,7 @@ void write_reg(uint8_t,uint8_t);
 //#define soundcheck
 
 uint8_t sid_buf[25];
+uint8_t sid_buf2[25];
 
 
 int main(void)
@@ -65,9 +66,9 @@ int main(void)
 
 #ifdef soundcheck
 		write_reg(4,0x21);
-		_delay_ms(50);
+		_delay_ms(500);
 		write_reg(4,0x20);
-		_delay_ms(50);
+		_delay_ms(500);
 #endif
 
 
@@ -85,7 +86,15 @@ int main(void)
 	        {
 				for(uint8_t i = 0; i<25;i++)
 				{
-					write_reg(i,sid_buf[i]);
+					if(sid_buf[i] != sid_buf2[i])
+					{
+						write_reg(i,sid_buf[i]);
+						for(uint8_t j = 0; j<10;j++)
+						{
+							asm volatile("nop");
+						}
+						sid_buf2[i] = sid_buf[i];
+					}
 				}
 	        }
 	        else
@@ -99,11 +108,11 @@ int main(void)
 				if(sid_addr < 26)
 				{
 					sid_buf[sid_addr]=sid_data;
-					USART0_putc(' ');
+//					USART0_putc(' ');
 				}
 				else
 				{
-					USART0_putc('X');
+//					USART0_putc('X');
 				}
 
 	        }
@@ -126,6 +135,7 @@ void write_reg(uint8_t sid_addr, uint8_t sid_data)
 
 void toggle_cs(void)
 {
+					nops();
 					SID_CS_PORT &= ~(1<<SID_CS_PIN);
 					nops();
 					SID_CS_PORT |= (1<<SID_CS_PIN);
@@ -134,7 +144,7 @@ void toggle_cs(void)
 
 void nops(void)
 {
-	for(uint8_t i = 0; i<30;i++)
+	for(uint8_t i = 0; i<10;i++)
 	{
 		asm volatile("nop");
 	}
